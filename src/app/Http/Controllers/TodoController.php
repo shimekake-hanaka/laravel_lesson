@@ -21,7 +21,7 @@ class TodoController extends Controller
     public function index()
     {
         $todos = $this->todo->all();
-        // dd($todos); //配列型が入っている
+        // dd($todos); // collectionインスタンスが入っている
         return view('todo.index', ['todos' => $todos]);
     }
 
@@ -36,10 +36,10 @@ class TodoController extends Controller
     {
         // dd($request); //オブジェクト型が入っている。
         $inputs = $request->all();
-        // dd($inputs); //配列型が入っている。httpから受け取ったすべてのフォームデータ。トークンとコンテンツ。
-        // ↓Eloquentモデルのfillメソッドでsql文セット
+        // dd($inputs); //連想配列型が入っている。httpから受け取ったすべてのフォームデータ。トークンとコンテンツ。
+        // ↓Eloquentモデルのfillメソッドで
         $this->todo->fill($inputs);
-        // insert into todos (content,  ,  ) values ('あああ',  ,  );
+        // insert into todos (content,  ,  ) values ('あああ',  ,  );SQL
         $this->todo->save();
         return redirect()->route('todo.index');
     }
@@ -49,7 +49,7 @@ class TodoController extends Controller
     {
         // dd($id); //整数
         $todo = $this->todo->find($id);
-        // dd($todo); // findはIDカラムで探す
+        // dd($todo); // オブジェクト型。findはIDカラムで探す
         // select * from todos where id = $id
         return view('todo.show', ['todo' => $todo]);
     }
@@ -58,7 +58,7 @@ class TodoController extends Controller
     public function edit($id)
     {
         $todo = $this->todo->find($id);
-        // select * from todos where id = $id
+        // select * from todos where id = $id　TODOモデルのオブジェクト
         return view('todo.edit', ['todo' => $todo]);
     }
 
