@@ -63,15 +63,15 @@ class TodoController extends Controller
     // delete
     public function delete($id)
     {
-        $todo = $this->todo->find($id);
-        $todo->delete();
+        $todo = $this->todo->find($id); // collectionインスタンスのオブジェクト型
+        $todo->delete(); // softdeleteモデルのdeleteが実行
         return redirect()->route('todo.index');
     }
     // 完了
     public function complete($id)
     {
-        $todo = $this->todo->find($id);
-        $todo->is_completed = !$todo->is_completed;
+        $todo = $this->todo->find($id); // collectionインスタンスのオブジェクト型。受け取ったIDのレコードを呼び出してる。
+        $todo->is_completed = !$todo->is_completed; // !演算子で取得した値の反転を行う。 もともとfalseだったのをtrueに変えた
         $todo->save();
         return response()->json(['is_completed' => $todo->is_completed]);
     }
